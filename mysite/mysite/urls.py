@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+#  These are urls include admin and all of the urls from tracktopics
 urlpatterns = [
     url(r'^tracktopics/', include('tracktopics.urls')),
     url(r'^admin/', admin.site.urls),

@@ -6,6 +6,7 @@ from .forms import AddFieldsForm
 
 from .models import TrackingTopic
 
+# Index page - shows all of the topics that are being tracked and a link to create a new topic
 def index(request):
     latest_topic_list = TrackingTopic.objects.all()
     template = loader.get_template('tracktopics/index.html')
@@ -21,21 +22,21 @@ def results(request, trackingtopic_id):
     print matchingtweets
     return render(request, 'tracktopics/results.html', {'topic': topic, 'matchingtweets': matchingtweets})
         
-   
+# Used to create a new topic to track - 
+# TODO: needs to either only have the topic field and a separate page to add users and words/users
+# or have the ability to add multiple words/users at a time or both
+# TODO: need a way to edit existing topics
 def addtrackingfields(request):
     
-    # if this is a POST request we need to process the form data
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
+        # Users my form in forms.py to gather the information I need into an object
         form = AddFieldsForm(request.POST)
-        # check whether it's valid:
+        # If its valid add this stuff to the database
         if form.is_valid():
             trackingtopicobject = TrackingTopic.objects.create(topic_text=form.cleaned_data['topic'])
             trackingtopicobject.wordtotrack_set.create(word_text=form.cleaned_data['word'])
             trackingtopicobject.usertotrack_set.create(user_text=form.cleaned_data['user'])
             return HttpResponseRedirect('/tracktopics/')
-
-    # if a GET (or any other method) we'll create a blank form
     else:
         form = AddFieldsForm()
     return render(request, 'tracktopics/addtrackingfields.html', {'form': form})
