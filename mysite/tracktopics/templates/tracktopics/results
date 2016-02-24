@@ -1,0 +1,6 @@
+<h1>{{ TrackingTopic.topic_text }}</h1>
+<ul>
+{% for word in Topic.wordtotrack_set.all %}
+    <li>{{ word.word_text }}</li>
+{% endfor %}
+</ul>

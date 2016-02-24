@@ -1,0 +1,10 @@
+{% if latest_topic_list %}
+    <ul>
+    {% for trackingtopic in latest_topic_list %}
+        <li><a href="/tracktopics/{{ trackingtopic.id }}/">{{ trackingtopic.topic_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>There are no topics being tracked on twitter.</p>
+{% endif %}
+<a href="/tracktopics/addtrackingfields/">Set up a new topic to track</a>

@@ -1,0 +1,15 @@
+<h1>Found tweets related to: {{ topic.topic_text }}</h1>
+<h2>Results</h2>
+{{ matchingtweets }}
+<h2> Tracking words </h2>
+<u3>
+{% for word in topic.wordtotrack_set.all %}
+    <li>{{ word.word_text }}</li>
+{% endfor %}
+</u3>
+<h2> Tracking Users </h2>
+<u3>
+{% for user in topic.usertotrack_set.all %}
+    <li>{{ user.user_text }}</li>
+{% endfor %}
+</u3>
