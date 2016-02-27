@@ -30,20 +30,22 @@ def find_tweets(topic):
     #print user_list
     
     #
-    matchingtweets = ""
+    matchingtweets = []
     for user in user_list:
         print user.user_text
-        # Get the last 100 tweets for each user and check if the any is contained in them, if so append to return string
-        public_tweets = api.user_timeline(str(user.user_text), count=100)
+        # Get the last 10 tweets for each user and check if the any is contained in them, if so append to return string
+        public_tweets = api.user_timeline(str(user.user_text), count=10)
+        
+        # TODO: a set intersection instead of double loop 
         for tweet in public_tweets:
             tweetinfo = tweet.text.encode('UTF-8')
             for word in word_list:
                 # TODO: don't repeat tweets that have multiple tracking words
-                if str(word.word_text) in tweetinfo.lower():
-                    # TODO: format better
-                    matchingtweets += str(user.user_text)+ " tweeted '"+ str(word.word_text) + "' in: "+ str(tweetinfo) + "\n\n ----- \n\n"
+                if str(word.word_text).lower() in tweetinfo.lower():
+                    # TODO: format better                    
+                    matchingtweets.append(str(user.user_text)+ " tweeted '"+ str(word.word_text) + "' in: "+ str(tweetinfo))
+                    break
 
-    print matchingtweets
     return matchingtweets
     
     
